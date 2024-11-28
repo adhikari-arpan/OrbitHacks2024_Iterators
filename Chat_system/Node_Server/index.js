@@ -1,5 +1,11 @@
 //Node Server handling socket.io connections
 
+const express = require('express');
+const app = express();
+const cors = require('cors');
+// Enable CORS for all origins
+app.use(cors());
+
 const io = require('socket.io')(8000)
 
 const users = {};
