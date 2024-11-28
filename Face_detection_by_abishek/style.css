@@ -1,13 +1,41 @@
-body{
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: 100vh;
+body {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #e0f7fa;
+    /* Light blue background for a calming UI */
+    font-family: Arial, sans-serif;
+    /* Clean font for better readability */
 }
 
-canvas{
+#video {
+    max-width: 100%;
+    border: 3px solid #004d40;
+    /* Dark teal border for better visibility */
+    border-radius: 8px;
+    /* Rounded corners for a modern look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Subtle shadow for depth */
+}
+
+canvas {
     position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    /* Ensure canvas overlays the video for face detection */
+    pointer-events: none;
+    /* Prevent interaction with the canvas */
+}
+
+
+/* Additional styling for responsiveness */
+
+@media (max-width: 768px) {
+    #video {
+        width: 90%;
+        /* Make video more responsive on smaller screens */
+    }
 }
