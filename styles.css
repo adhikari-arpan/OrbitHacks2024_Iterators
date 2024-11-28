@@ -27,6 +27,8 @@ body {
   display: flex;
   margin: 0;
   padding: 0;
+  padding-right: 50px;
+  gap: 10px;
 }
 
 .nav-links li {
@@ -63,6 +65,8 @@ body {
   padding: 0;
   margin: 0;
   display: none;
+  width: 200%;
+  padding-right: 200px;
 }
 
 .dropdown:hover .dropdown-menu {
