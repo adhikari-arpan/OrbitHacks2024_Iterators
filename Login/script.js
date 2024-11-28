@@ -1,11 +1,22 @@
-const sign_in_btn = document.querySelector("#sign-in-btn");
-const sign_up_btn = document.querySelector("#sign-up-btn");
-const container = document.querySelector(".container");
+const loginForm = document.getElementById("login-form");
+const signupForm = document.getElementById("signup-form");
+const signupFormContainer = document.getElementById("signup-form-container");
+const switchFormLinks = document.querySelectorAll("#switch-form a");
 
-sign_up_btn.addEventListener("click", () => {
-  container.classList.add("sign-up-mode");
+switchFormLinks.forEach((link) => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    loginForm.parentElement.classList.toggle("hidden");
+    signupFormContainer.classList.toggle("hidden");
+  });
 });
 
-sign_in_btn.addEventListener("click", () => {
-  container.classList.remove("sign-up-mode");
+loginForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  // Add login logic here
+});
+
+signupForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  // Add sign-up logic here
 });
