@@ -3,78 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointment Form</title>
+    <title>Appointment Booking Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f7f7f7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .appointment-form {
-            background: #fff;
+            max-width: 500px;
+            margin: 0 auto;
             padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .appointment-form {
+            background-color: white;
+            padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            width: 100%;
-            padding-right: 50px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
-        .appointment-form h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
         .form-group {
             margin-bottom: 15px;
         }
-
         .form-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
-
-        .form-group input,
-        .form-group select,
+        .form-group input, 
         .form-group textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-
-        .form-group textarea {
-            resize: none;
-        }
-
         .form-button {
             text-align: center;
         }
-
         .form-button button {
+            background-color: #4CAF50;
+            color: white;
             padding: 10px 20px;
-            background-color: #21ac44;
-            color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
-
-       
+        .form-button button:hover {
+            background-color: #45a049;
+        }
+        #errorMessage {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+        #successMessage {
+            color: green;
+            text-align: center;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="appointment-form">
         <h2>Book an Appointment</h2>
-        <form action="#" method="post">
+        <form id="appointmentForm">
             <div class="form-group">
                 <label for="name">Full Name</label>
                 <input type="text" id="name" name="name" placeholder="Enter your full name" required>
@@ -99,10 +88,64 @@
                 <label for="reason">Reason for Appointment</label>
                 <textarea id="reason" name="reason" rows="4" placeholder="Enter the reason for your appointment"></textarea>
             </div>
+            <div id="errorMessage"></div>
+            <div id="successMessage"></div>
             <div class="form-button">
-                <button type="submit">Submit</button>
+                <button type="submit">Submit Appointment</button>
             </div>
         </form>
     </div>
+
+    <!-- EmailJS Library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <script>
+        // Initialize EmailJS
+        window.onload = function() {
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init("WvstBphRTBcxoTpMm");
+                console.log('EmailJS initialized successfully');
+            } else {
+                console.error('EmailJS library not loaded');
+                document.getElementById('errorMessage').textContent = 'Email service is currently unavailable.';
+            }
+        };
+
+        // Handle form submission
+        const form = document.getElementById('appointmentForm');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from reloading the page
+
+            // Clear messages
+            document.getElementById('errorMessage').textContent = '';
+            document.getElementById('successMessage').textContent = '';
+
+            // Form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value,
+                reason: document.getElementById('reason').value,
+                to_email: 'sandeshkhadka293@gmail.com' // Replace with your email address
+            };
+
+            // EmailJS IDs
+            const serviceId = 'service_ew9jgxb';
+            const templateId = 'template_771ftuc';
+
+            // Send email
+            emailjs.send(serviceId, templateId, formData)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    document.getElementById('successMessage').textContent = 'Appointment booked successfully! We will contact you soon.';
+                    form.reset(); // Reset form
+                }, function(error) {
+                    console.error('EmailJS Error:', error);
+                    document.getElementById('errorMessage').textContent = 'Failed to book appointment. Please try again later.';
+                });
+        });
+    </script>
 </body>
 </html>
