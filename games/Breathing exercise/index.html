@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A stress-relief breathing exercise app for mental health support">
+    <title>Mindful Breathing - Stress Relief Exercise</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/svg+xml" href="breath-icon.svg">
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1>Relax and Breathe</h1>
+            <p>Follow the animation and let go of stress. 🌟</p>
+        </header>
+
+        <section id="breathing-exercise">
+            <div id="circle-container" aria-live="polite">
+                <div id="circle" role="animation" aria-label="Breathing guide circle"></div>
+            </div>
+
+            <p id="instructions" aria-live="assertive">Inhale...</p>
+        </section>
+
+
+        <div class="theme-controls">
+            <h2 class="sr-only">Theme Selection</h2>
+            <button onclick="setTheme('day')" aria-label="Day Theme">Day Theme</button>
+            <button onclick="setTheme('night')" aria-label="Night Theme">Night Theme</button>
+        </div>
+        </section>
+
+        <section id="motivation">
+            <blockquote id="quote" aria-live="polite">
+                "Take a deep breath. You're doing great!"
+            </blockquote>
+        </section>
+
+
+        <div id="progress-tracker">
+            <h2>Progress Tracker</h2>
+            <div class="progress">
+                <p>Sessions Completed: <span id="sessions-count">0</span></p>
+                <div class="progress-bar" id="sessions-bar">
+                    <div class="progress-fill" id="sessions-fill"></div>
+                </div>
+            </div>
+            <div class="progress">
+                <p>Streak: <span id="streak-count">0</span> days</p>
+            </div>
+            <div class="mood">
+                <label for="mood-rating">Rate your mood before the exercise:</label>
+                <div class="mood-emoji">
+                    <span class="emoji" id="emoji-1">😞</span>
+                    <span class="emoji" id="emoji-2">😐</span>
+                    <span class="emoji" id="emoji-3">😊</span>
+                    <span class="emoji" id="emoji-4">😁</span>
+                    <span class="emoji" id="emoji-5">😍</span>
+                </div>
+                <input type="range" id="mood-rating" min="1" max="5" step="1">
+            </div>
+            <button onclick="saveProgress()">Save Progress</button>
+        </div>
+
+
+
+
+        <footer>
+            <div class="music-controls">
+                <button id="music-toggle" onclick="toggleMusic()" aria-label="Toggle Background Music">
+                    🎵 Play Music
+                </button>
+            </div>
+
+            <div class="cycle-tracker">
+                <label for="cycle-count">Breathing Cycles Completed:</label>
+                <output id="cycle-count" aria-live="polite">0</output>
+            </div>
+        </footer>
+
+        <audio id="calm-music" loop aria-label="Calming Background Music">
+            <source src="calm-music.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
