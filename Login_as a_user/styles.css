@@ -53,3 +53,26 @@ button {
   color: #007bff;
   text-decoration: none;
 }
+.signup-form.hidden {
+  display: none;
+}
+
+#signup-options {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.signup-option {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.signup-option.active {
+  background-color: #0056b3;
+}
