@@ -19,7 +19,7 @@ const name = prompt("Enter your name to join");
 socket.emit('new-user-joined', name);
 
 socket.on('user-joined', name => {
-    append(`${name} joined the chat`, 'right');
+    append(`${name} joined the chat`, 'center');
 });
 
 socket.on('receive', data => {
@@ -27,7 +27,7 @@ socket.on('receive', data => {
 });
 
 socket.on('left', name => {
-    append(`${name} left the chat`, 'left');
+    append(`${name} left the chat`, 'center');
 });
 
 //Submit Event

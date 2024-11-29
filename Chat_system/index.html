@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Manoratha Community</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="http://localhost:8000/socket.io/socket.io.js"></script>
-  <script defer src="client.js"></script>
-</head>
-<body>
-  <nav>
-    <img class="logo" src="chat.png" alt="Chat Logo" />
-    <h1 class="welcome-text">Welcome to Manoratha Community</h1>
-  </nav>
-  <div class="container">
-    <!-- Messages will appear here -->
-  </div>
-  <div class="send">
-    <form section="#" id="send-container">
-      <input type="text" id="messageInp" name="messageInp" placeholder="Type your message here..." />
-      <button class="btn" type="submit" id="sendBtn">Send</button>
-    </form>
-  </div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manoratha Community</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="http://localhost:8000/socket.io/socket.io.js"></script>
+    <script defer src="client.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cookie&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav>
+      <img class="logo" src="chat.png" alt="Chat Logo" />
+      <h1 class="welcome-text">Welcome to Manoratha Community</h1>
+    </nav>
+    <div class="container">
+      <!-- Messages will appear here -->
+    </div>
+    <div class="send">
+      <form section="#" id="send-container">
+        <input
+          type="text"
+          id="messageInp"
+          name="messageInp"
+          placeholder="Type your message here..."
+        />
+        <button class="btn" type="submit" id="sendBtn">Send</button>
+      </form>
+    </div>
+  </body>
 </html>
