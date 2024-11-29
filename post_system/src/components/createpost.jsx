@@ -1,24 +1,44 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import "../styles/createpost.css";
 
-
-const createpost = ({ onAddPost }) => {
+const CreatePost = () => {
   const [text, setText] = useState('');
   const [image, setImage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (text || image) {
-      const newPost = {
-        id: Date.now(),
-        text,
-        image,
-        likes: 0,
-        comments: [],
+    await addPost(); // Trigger the post creation when form is submitted
+  };
+
+  const addPost = async () => {
+    setIsSubmitting(true); // Set loading state
+    setError(null); // Reset error state
+
+    try {
+      // Prepare the payload with the form input data
+      const payload = {
+        text: text,
+        image_url: image, // Use image URL input directly
       };
-      onAddPost(newPost);
+
+      // Send POST request to backend
+      const res = await axios.post("http://localhost:8000/api/posts/add", payload, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      console.log('Post added successfully:', res.data);
+
+      // Clear inputs after successful submission
       setText('');
       setImage('');
+    } catch (error) {
+      setError('Error adding post'); // Set error message if something goes wrong
+      console.error(error); // Log detailed error for debugging
+    } finally {
+      setIsSubmitting(false); // Reset loading state after the request is complete
     }
   };
 
@@ -28,16 +48,21 @@ const createpost = ({ onAddPost }) => {
         <textarea
           placeholder="What's on your mind?"
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => setText(e.target.value)} // Update text state
         />
         <input
-          type="file"
-          onChange={(e) => setImage(URL.createObjectURL(e.target.files[0]))}
+          type="text"
+          placeholder="Image URL" // Input field for the image URL
+          value={image}
+          onChange={(e) => setImage(e.target.value)} // Update image state
         />
-        <button type="submit">Post</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Posting...' : 'Post'} {/* Button text change based on submission status */}
+        </button>
+        {error && <p className="error">{error}</p>} {/* Display error message if exists */}
       </form>
     </div>
   );
 };
 
-export default createpost;
+export default CreatePost;

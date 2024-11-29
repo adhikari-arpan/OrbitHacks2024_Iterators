@@ -12,21 +12,78 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet" />
-</head>
 
+
+    <style>
+        .return_home_button {
+  position: absolute; /* Use absolute positioning */
+  top: 20px; /* Position it 20px from the top */
+  left: 20px; /* Position it 20px from the left */
+  z-index: 10; /* Ensures the button stays above other content */
+}
+
+.return_home_button button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.return_home_button button:hover {
+  background-color: #45a049;
+}
+
+.return_home_button a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Styles for the rest of the page */
+nav {
+  padding: 20px;
+  text-align: center;
+}
+
+.container {
+  margin-top: 50px; /* Adds space below the nav */
+}
+
+.send {
+    width:75%;
+  position: fixed; /* Keeps the send form at the bottom */
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 200px;
+}
+
+    </style>
+</head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar">
+    <!-- <nav class="navbar">
         <div class="logo" lang="ne">मनोरथ</div>
         <ul class="nav-links">
-            <li><a href="index.html" class="nav-item">Home</a></li>
+            <li><a href="../index.html" class="nav-item">Home</a></li>
             <li><a href="#" class="nav-item">Connect to Professionals</a></li>
-            <li><a href="./games/index.html" class="nav-item">Games</a></li>
-            <li><a href="./Face_detection_by_abishek/index.html" class="nav-item">Detect Emotion with AI</a></li>
-            <li><a href="./Magazine/index.html" class="nav-item">Magazines</a></li>
-            <li><a href="./login/login.html" class="nav-item">Get In</a></li>
+            <li><a href="../games/index.html" class="nav-item">Games</a></li>
+            <li><a href="../Face_detection_by_abishek/index.html" class="nav-item">Detect Emotion with AI</a></li>
+            <li><a href="../Magazine/index.html" class="nav-item">Magazines</a></li>
+            <li><a href="../login/login.html" class="nav-item">Get In</a></li>
         </ul>
-    </nav>
+    </nav> -->
+
+
+    <div class="return_home_button"><button><a href="./../index.html">Home</a></button></div>
     <nav>
         <img class="logo" src="chat.png" alt="Chat Logo" />
         <h1 class="welcome-text">Welcome to Manoratha Community</h1>

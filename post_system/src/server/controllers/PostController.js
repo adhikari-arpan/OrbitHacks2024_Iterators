@@ -1,11 +1,11 @@
-const db = require('../db');
+import { query as _query } from '../db';
 
 // Add new post
 const addPost = (req, res) => {
     const { text, image_url } = req.body;
 
-    const query = 'INSERT INTO posts (text, image_url) VALUES (?, ?)';
-    db.query(query, [text, image_url], (err, result) => {
+    const query = 'INSERT INTO users (text, image_url) VALUES (?, ?)';
+    _query(query, [text, image_url], (err, result) => {
         if (err) {
             return res.status(500).send('Error inserting data');
         }
@@ -15,8 +15,8 @@ const addPost = (req, res) => {
 
 // Get all posts
 const getPosts = (req, res) => {
-    const query = 'SELECT * FROM posts';
-    db.query(query, (err, results) => {
+    const query = 'SELECT * FROM users';
+    _query(query, (err, results) => {
         if (err) {
             return res.status(500).send('Error fetching data');
         }
@@ -24,4 +24,6 @@ const getPosts = (req, res) => {
     });
 };
 
-module.exports = { addPost, getPosts };
+export default { addPost, getPosts };
+import connection from '../db'; // Adjust the path if necessary
+
