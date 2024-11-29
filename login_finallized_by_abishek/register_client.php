@@ -23,7 +23,7 @@ try {
     $age = intval($_POST['client-age']);
     $gender = $_POST['client-gender'];
     $address = $_POST['client-address'];
-    $password = $_POST['client-password']; // Plain password from the form
+    $plain_password = $_POST['client-password']; // Plain password from the form
 
     // Validate age range (18-120)
     if ($age < 18 || $age > 120) {
@@ -31,11 +31,11 @@ try {
     }
 
     // Hash the password for security
-    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+    // $hashed_password = password_hash($plain_password, PASSWORD_BCRYPT); // Hash the password
 
     // Handle photo upload
     $photo = $_FILES['client-photo'];
-    $upload_dir = 'uploads/clients';
+    $upload_dir = 'uploads/clients/';
     $photo_name = time() . '_' . basename($photo['name']);
     $photo_path = $upload_dir . $photo_name;
 
@@ -48,11 +48,12 @@ try {
         "INSERT INTO Client_data (name, email, phone, photo, age, gender, address, password) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
     );
-    $stmt->bind_param("ssssisss", $name, $email, $phone, $photo_path, $age, $gender, $address, $hashed_password);
+    $stmt->bind_param("ssssisss", $name, $email, $phone, $photo_path, $age, $gender, $address, $plain_password);
 
     $stmt->execute();
 
     echo "Client registered successfully!";
+    header("Location: index.html"); // Redirect to the home page or login page
 } catch (Exception $e) {
     // Handle errors
     echo "Error: " . $e->getMessage();
