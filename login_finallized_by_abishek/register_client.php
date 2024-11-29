@@ -1,64 +1,30 @@
 <?php
-// Enable error reporting for debugging
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+include 'db_connect.php';
 
-// Database connection
-$host = 'localhost';
-$username = 'root';
-$password = '';
-$dbname = 'manoratha';
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $age = $_POST['age'];
+    $gender = $_POST['gender'];
+    $address = $_POST['address'];
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Encrypt password
 
-$conn = new mysqli($host, $username, $password, $dbname);
+    // File Upload Handling
+    $photo = $_FILES['photo'];
+    $photoName = uniqid() . "_" . basename($photo['name']);
+    $photoPath = "uploads/clients/" . $photoName;
+    move_uploaded_file($photo['tmp_name'], $photoPath);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    // Insert into Database
+    $sql = "INSERT INTO client_data (name, email, phone, photo, age, gender, address, password)
+            VALUES ('$name', '$email', '$phone', '$photoName', '$age', '$gender', '$address', '$password')";
 
-try {
-    // Get form data
-    $name = $_POST['client-name'];
-    $email = $_POST['client-email'];
-    $phone = $_POST['client-phone'];
-    $age = intval($_POST['client-age']);
-    $gender = $_POST['client-gender'];
-    $address = $_POST['client-address'];
-    $plain_password = $_POST['client-password']; // Plain password from the form
-
-    // Validate age range (18-120)
-    if ($age < 18 || $age > 120) {
-        throw new Exception('Age must be between 18 and 120.');
+    if ($conn->query($sql) === TRUE) {
+        // echo "Client registered successfully!";
+        header("Location:index.html");
+    } else {
+        echo "Error: " . $conn->error;
     }
-
-    // Hash the password for security
-    // $hashed_password = password_hash($plain_password, PASSWORD_BCRYPT); // Hash the password
-
-    // Handle photo upload
-    $photo = $_FILES['client-photo'];
-    $upload_dir = 'uploads/clients/';
-    $photo_name = time() . '_' . basename($photo['name']);
-    $photo_path = $upload_dir . $photo_name;
-
-    if (!move_uploaded_file($photo['tmp_name'], $photo_path)) {
-        throw new Exception('Failed to upload photo.');
-    }
-
-    // Prepare and execute the SQL query
-    $stmt = $conn->prepare(
-        "INSERT INTO Client_data (name, email, phone, photo, age, gender, address, password) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-    );
-    $stmt->bind_param("ssssisss", $name, $email, $phone, $photo_path, $age, $gender, $address, $plain_password);
-
-    $stmt->execute();
-
-    echo "Client registered successfully!";
-    header("Location: index.html"); // Redirect to the home page or login page
-} catch (Exception $e) {
-    // Handle errors
-    echo "Error: " . $e->getMessage();
-} finally {
-    // Close the connection
-    $conn->close();
 }
 ?>
