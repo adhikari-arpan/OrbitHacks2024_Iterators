@@ -27,7 +27,7 @@ socket.on('receive', data => {
 });
 
 socket.on('left', name => {
-    append(`${name} left the chat`, 'left');
+    append(`${name} left the chat`, 'center');
 });
 
 //Submit Event
