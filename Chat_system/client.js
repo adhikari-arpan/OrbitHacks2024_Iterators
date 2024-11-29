@@ -10,9 +10,9 @@ const append = (message, position) => {
     messageElement.classList.add('message');
     messageElement.classList.add(position);
     messageContainer.append(messageElement);
-    // if(position == 'left'){
-    //     audio.play();
-    // }
+    if(position == 'left'){
+        audio.play();
+    }
 }
 
 const name = prompt("Enter your name to join");
@@ -22,4 +22,22 @@ socket.on('user-joined', name => {
     append(`${name} joined the chat`, 'right');
 });
 
-// var audio = new Audio('ting.mp3');
+socket.on('receive', data => {
+    append(`${data.name}: ${data.message}`, 'left');
+});
+
+socket.on('left', name => {
+    append(`${name} left the chat`, 'left');
+});
+
+//Submit Event
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = messageInput.value;
+    append(`You: ${message}`, 'right');
+    socket.emit('send', message);
+    messageInput.value = '';
+});
+
+//Audio
+var audio = new Audio('sound.mp3');
