@@ -1,21 +1,83 @@
-// Get the elements for login and signup forms
-const loginFormContainer = document.getElementById("login-form-container");
-const signupFormContainer = document.getElementById("signup-form-container");
-
-// Get the links for switching forms
-const showSignupLink = document.getElementById("show-signup");
-const showLoginLink = document.getElementById("show-login");
-
-// Add event listener for the "Sign up" link (to show the signup form)
-showSignupLink.addEventListener("click", function (event) {
-  event.preventDefault(); // Prevent the default link behavior
-  loginFormContainer.classList.add("hidden"); // Hide the login form
-  signupFormContainer.classList.remove("hidden"); // Show the signup form
-});
-
-// Add event listener for the "Sign in" link (to show the login form)
-showLoginLink.addEventListener("click", function (event) {
-  event.preventDefault(); // Prevent the default link behavior
-  signupFormContainer.classList.add("hidden"); // Hide the signup form
-  loginFormContainer.classList.remove("hidden"); // Show the login form
-});
+document.addEventListener("DOMContentLoaded", () => {
+    // Steps
+    const initialOptions = document.getElementById("initialOptions");
+    const roleSelection = document.getElementById("roleSelection");
+    const formsContainer = document.getElementById("formsContainer");
+  
+    // Buttons
+    const signUpBtn = document.getElementById("signUpBtn");
+    const signInBtn = document.getElementById("signInBtn");
+    const clientBtn = document.getElementById("clientBtn");
+    const counselorBtn = document.getElementById("counselorBtn");
+    const backToInitialBtn = document.getElementById("backToInitialBtn");
+    const backToRoleBtn = document.getElementById("backToRoleBtn");
+  
+    // Forms
+    const clientSignUpForm = document.getElementById("clientSignUpForm");
+    const clientSignInForm = document.getElementById("clientSignInForm");
+    const counselorSignUpForm = document.getElementById("counselorSignUpForm");
+    const counselorSignInForm = document.getElementById("counselorSignInForm");
+  
+    // Utility to hide all steps
+    const hideAllSteps = () => {
+      initialOptions.classList.add("hidden");
+      roleSelection.classList.add("hidden");
+      formsContainer.classList.add("hidden");
+    };
+  
+    // Utility to hide all forms
+    const hideAllForms = () => {
+      clientSignUpForm.classList.add("hidden");
+      clientSignInForm.classList.add("hidden");
+      counselorSignUpForm.classList.add("hidden");
+      counselorSignInForm.classList.add("hidden");
+    };
+  
+    // Step 1: Initial Options
+    signUpBtn.addEventListener("click", () => {
+      hideAllSteps();
+      roleSelection.classList.remove("hidden");
+      document.getElementById("roleSelectionTitle").innerText = "Sign Up As";
+    });
+  
+    signInBtn.addEventListener("click", () => {
+      hideAllSteps();
+      roleSelection.classList.remove("hidden");
+      document.getElementById("roleSelectionTitle").innerText = "Sign In As";
+    });
+  
+    // Step 2: Role Selection
+    clientBtn.addEventListener("click", () => {
+      hideAllSteps();
+      formsContainer.classList.remove("hidden");
+      hideAllForms();
+      if (document.getElementById("roleSelectionTitle").innerText.includes("Sign Up")) {
+        clientSignUpForm.classList.remove("hidden");
+      } else {
+        clientSignInForm.classList.remove("hidden");
+      }
+    });
+  
+    counselorBtn.addEventListener("click", () => {
+      hideAllSteps();
+      formsContainer.classList.remove("hidden");
+      hideAllForms();
+      if (document.getElementById("roleSelectionTitle").innerText.includes("Sign Up")) {
+        counselorSignUpForm.classList.remove("hidden");
+      } else {
+        counselorSignInForm.classList.remove("hidden");
+      }
+    });
+  
+    // Back Buttons
+    backToInitialBtn.addEventListener("click", () => {
+      hideAllSteps();
+      initialOptions.classList.remove("hidden");
+    });
+  
+    backToRoleBtn.addEventListener("click", () => {
+      hideAllSteps();
+      roleSelection.classList.remove("hidden");
+    });
+  });
+  

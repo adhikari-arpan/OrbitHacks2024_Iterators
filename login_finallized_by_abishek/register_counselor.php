@@ -1,58 +1,58 @@
 <?php
-// Database connection
-$servername = "localhost"; // Change this to your database server
-$username = "root";        // Your database username
-$password = "";            // Your database password
-$dbname = "manoratha";     // Your database name
+include 'db_connect.php';
 
-// Create a connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Sanitize and validate user inputs
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $age = $_POST['age'];
+    $gender = $_POST['gender'];
+    $address = $_POST['address'];
+    $about = $_POST['about'];
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Encrypt password
 
-    // Get form data
-    $name = $_POST['counselor-name'];
-    $email = $_POST['counselor-email'];
-    $phone = $_POST['counselor-phone'];
-    $age = $_POST['counselor-age'];
-    $gender = $_POST['counselor-gender'];
-    $address = $_POST['counselor-address'];
-    $about = $_POST['counselor-about'];
-    $password = password_hash($_POST['counselor-password'], PASSWORD_DEFAULT); // Hash the password
+    // File Upload Handling
+    $photo = $_FILES['photo'];
+    $resume = $_FILES['resume'];
+    $photoName = uniqid() . "_" . basename($photo['name']);
+    $resumeName = uniqid() . "_" . basename($resume['name']);
+    $photoPath = "uploads/counselors/photos/" . $photoName;
+    $resumePath = "uploads/counselors/resumes/" . $resumeName;  // Fix missing slash
 
-    // File uploads for photo and resume
-    $photo = $_FILES['counselor-photo']['name'];
-    $photo_temp = $_FILES['counselor-photo']['tmp_name'];
-    $resume = $_FILES['counselor-resume']['name'];
-    $resume_temp = $_FILES['counselor-resume']['tmp_name'];
-
-    // Set target directories for file uploads
-    $photo_dir = "uploads/counselor/photos/" . basename($photo);
-    $resume_dir = "uploads/counselor/resumes/" . basename($resume);
-
-    // Move files to their respective directories
-    if (move_uploaded_file($photo_temp, $photo_dir) && move_uploaded_file($resume_temp, $resume_dir)) {
-        // Prepare SQL query to insert data into the database
-        $sql = "INSERT INTO counselor_data (name, email, phone, age, gender, address, photo, resume, about, password)
-                VALUES ('$name', '$email', '$phone', '$age', '$gender', '$address', '$photo_dir', '$resume_dir', '$about', '$password')";
-
-        // Execute the query
-        if ($conn->query($sql) === TRUE) {
-            echo "Counselor registered successfully.";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
+    // Validate file uploads (optional)
+    if (in_array($photo['type'], ['image/jpeg', 'image/png', 'image/jpg']) && $photo['size'] < 5000000) {
+        move_uploaded_file($photo['tmp_name'], $photoPath);
     } else {
-        echo "Error uploading files.";
+        echo "Invalid photo file. Allowed types: JPEG, PNG. Max size: 5MB.";
+        exit;
     }
-}
 
-// Close connection
-$conn->close();
+    if (in_array($resume['type'], ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']) && $resume['size'] < 5000000) {
+        move_uploaded_file($resume['tmp_name'], $resumePath);
+    } else {
+        echo "Invalid resume file. Allowed types: PDF, DOC, DOCX. Max size: 5MB.";
+        exit;
+    }
+
+    // Prepare SQL query using prepared statements to prevent SQL injection
+    $stmt = $conn->prepare("INSERT INTO counselor_data (name, email, phone, photo, resume, age, gender, address, about, password)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    // Bind the parameters to the prepared statement
+    $stmt->bind_param("ssssssssss", $name, $email, $phone, $photoName, $resumeName, $age, $gender, $address, $about, $password);
+
+    // Execute the prepared statement
+    if ($stmt->execute()) {
+        echo "Counselor registered successfully!";
+        header("Location: index.html");  // Redirect to the home page
+        exit;
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    // Close the prepared statement and connection
+    $stmt->close();
+    $conn->close();
+}
 ?>
