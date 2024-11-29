@@ -1,6 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const { addPost, getPosts } = require('../controllers/PostController');
+import { Router } from 'express';
+const router = Router();
+import { addPost, getPosts } from '../controllers/PostController';
 
 // Route to get all posts
 router.get('/', getPosts);
@@ -8,4 +8,4 @@ router.get('/', getPosts);
 // Route to add a new post
 router.post('/add', addPost);
 
-module.exports = router;
+export default router;
