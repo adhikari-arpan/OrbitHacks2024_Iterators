@@ -1,20 +1,22 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Database credentials
-    $host = 'localhost';
-    $user = 'root'; // Replace with your DB username
-    $password = ''; // Replace with your DB password
-    $dbname = 'manoratha';
+// Database connection
+$servername = "localhost"; // Change this to your database server
+$username = "root";        // Your database username
+$password = "";            // Your database password
+$dbname = "manoratha";     // Your database name
 
-    // Connect to the database
-    $conn = new mysqli($host, $user, $password, $dbname);
+// Create a connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Check connection
-    if ($conn->connect_error) {
-        die('Connection failed: ' . $conn->connect_error);
-    }
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-    // Collect form data
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    // Get form data
     $name = $_POST['counselor-name'];
     $email = $_POST['counselor-email'];
     $phone = $_POST['counselor-phone'];
@@ -22,36 +24,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $gender = $_POST['counselor-gender'];
     $address = $_POST['counselor-address'];
     $about = $_POST['counselor-about'];
-    $password = $_POST['counselor-password'];
+    $password = password_hash($_POST['counselor-password'], PASSWORD_DEFAULT); // Hash the password
 
-    // Hash the password
-    $password_hash = password_hash($password, PASSWORD_BCRYPT);
+    // File uploads for photo and resume
+    $photo = $_FILES['counselor-photo']['name'];
+    $photo_temp = $_FILES['counselor-photo']['tmp_name'];
+    $resume = $_FILES['counselor-resume']['name'];
+    $resume_temp = $_FILES['counselor-resume']['tmp_name'];
 
-    // Handle file uploads
-    $photo_path = 'uploads/' . basename($_FILES['counselor-photo']['name']);
-    if (!move_uploaded_file($_FILES['counselor-photo']['tmp_name'], $photo_path)) {
-        die('Photo upload failed.');
-    }
+    // Set target directories for file uploads
+    $photo_dir = "uploads/counselor/photos/" . basename($photo);
+    $resume_dir = "uploads/counselor/resumes/" . basename($resume);
 
-    $resume_path = 'uploads/' . basename($_FILES['counselor-resume']['name']);
-    if (!move_uploaded_file($_FILES['counselor-resume']['tmp_name'], $resume_path)) {
-        die('Resume upload failed.');
-    }
+    // Move files to their respective directories
+    if (move_uploaded_file($photo_temp, $photo_dir) && move_uploaded_file($resume_temp, $resume_dir)) {
+        // Prepare SQL query to insert data into the database
+        $sql = "INSERT INTO counselor_data (name, email, phone, age, gender, address, photo, resume, about, password)
+                VALUES ('$name', '$email', '$phone', '$age', '$gender', '$address', '$photo_dir', '$resume_dir', '$about', '$password')";
 
-    // Insert into database
-    $sql = "INSERT INTO counselor_data (name, email, phone, age, gender, address, photo_path, resume_path, about, password_hash) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('sssissssss', $name, $email, $phone, $age, $gender, $address, $photo_path, $resume_path, $about, $password_hash);
-
-    if ($stmt->execute()) {
-        echo 'Counselor registration successful.';
+        // Execute the query
+        if ($conn->query($sql) === TRUE) {
+            echo "Counselor registered successfully.";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
     } else {
-        echo 'Error: ' . $stmt->error;
+        echo "Error uploading files.";
     }
-
-    $stmt->close();
-    $conn->close();
 }
+
+// Close connection
+$conn->close();
 ?>

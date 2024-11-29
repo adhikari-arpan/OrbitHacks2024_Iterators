@@ -35,7 +35,7 @@ try {
 
     // Handle photo upload
     $photo = $_FILES['client-photo'];
-    $upload_dir = 'uploads/';
+    $upload_dir = 'uploads/clients';
     $photo_name = time() . '_' . basename($photo['name']);
     $photo_path = $upload_dir . $photo_name;
 
