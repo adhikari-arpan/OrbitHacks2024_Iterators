@@ -1,48 +1,75 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "Manoratha";
+// Start the session
+session_start();
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Enable error reporting for debugging
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+// Database connection
+$host = 'localhost';
+$username = 'root';
+$password = '';
+$dbname = 'manoratha';
+
+$conn = new mysqli($host, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['username'];  // Assuming username is the email
+// Check if the login form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get form data
+    $email = $_POST['username'];
     $password = $_POST['password'];
-    $userType = $_POST['user-type']; // 'client' or 'counselor'
 
-    $table = $userType === "client" ? "Clients_data" : "Counselor_data";
+    try {
+        // Query to get user data based on email
+        $stmt = $conn->prepare("SELECT * FROM Client_data WHERE email = ? LIMIT 1");
+        $stmt->bind_param("s", $email); // 's' means string
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    $sql = "SELECT * FROM $table WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+        // Check if user exists
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        if (password_verify($password, $row['password_hash'])) {
-            session_start();
-            $_SESSION['user_id'] = $row['id'];
-            $_SESSION['user_type'] = $userType;
-            $_SESSION['user_name'] = $row['name'];
+            // Verify the password using password_verify()
+            if (password_verify($password, $user['password'])) {
+                // Password is correct, start a session and set user info
+                $_SESSION['user_id'] = $user['id']; // Store user ID in session
+                $_SESSION['user_name'] = $user['name']; // Store user name in session
+                $_SESSION['user_email'] = $user['email']; // Store user email in session
+                $_SESSION['user_type'] = 'client'; // You can store whether the user is a client or counselor
 
-            echo "Login successful. Redirecting...";
-            header("Location: dashboard.php");  // Redirect to the dashboard
-            exit;
+                // Redirect to dashboard
+                header("Location: dashboard.php");
+                exit();
+            } else {
+                // Password is incorrect
+                $_SESSION['error_message'] = "Incorrect password!";
+                header("Location: login.php");
+                exit();
+            }
         } else {
-            echo "Invalid password.";
+            // User with the provided email does not exist
+            $_SESSION['error_message'] = "No user found with that email!";
+            header("Location: login.php");
+            exit();
         }
-    } else {
-        echo "No user found with this email.";
+    } catch (Exception $e) {
+        // Handle any errors
+        $_SESSION['error_message'] = "Error: " . $e->getMessage();
+        header("Location: login.php");
+        exit();
+    } finally {
+        // Close the connection
+        $conn->close();
     }
-
-    $stmt->close();
+} else {
+    // If the form isn't submitted, just show the login page
+    header("Location: login.php");
+    exit();
 }
-$conn->close();
 ?>
