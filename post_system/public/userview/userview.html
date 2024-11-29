@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .doctor-card {
+    display: flex;
+    align-items: center;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .doctor-image {
+    flex: 0 0 100px;
+    margin-right: 20px;
+  }
+  
+  .doctor-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .doctor-info h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 18px;
+  }
+  
+  .doctor-info p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  
+  .view-profile,
+  .check-other-time {
+    background-color: #10b848;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .availability-table {
+    margin-left: auto;
+    text-align: right;
+  }
+  
+  .availability-table table {
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  
+  .availability-table th,
+  .availability-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .availability-table th {
+    text-align: left;
+  }
+  .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #17c55a;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 10px;
+    }
+    /* Navbar */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4caf50;
+    color: white;
+    padding: 1rem 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* Ensures it aligns with the left side */
+    width: 100%;
+    z-index: 1000;
+    margin-left: -20px;
+    /* Shifts the navbar slightly to the left */
+}
+
+.navbar .logo {
+    font-family: 'Rouge Script', cursive;
+    font-size: 2rem;
+    color: #fff;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ffe9c8;
+}
+.all{
+
+}
+
+
+
+   
+    </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo" lang="ne">मनोरथ</div>
+    <ul class="nav-links">
+        <li><a href="#" class="nav-item">Connect to Professionals</a></li>
+        <li><a href="./games/index.html" class="nav-item">Games</a></li>
+        <li><a href="./Face_detection_by_abishek/index.html" class="nav-item">Detect Emotion with AI</a></li>
+        <li><a href="./Chat_system/index.html" class="nav-item">Community</a></li>
+        <li><a href="./Magazine/index.html" class="nav-item">Magazines</a></li>
+        <li><a href="./login/login_main.php" class="nav-item">Get In</a></li>
+    </ul>
+</nav>
+<section class="allrecords">
+    <div class="doctor-card">
+        <div class="doctor-image">
+          <img src="doctor-image.jpg" alt="Dr. Sameer Khadka">
+        </div>
+        <div class="doctor-info">
+          <h3>Dr. Sameer Khadka</h3>
+          <p>Consultant Dermatologist & Venereologist</p>
+          <p>Experience: 7 years</p>
+          <p>Next Available Time: Nov 30 at 8:00 PM</p>
+          <button class="view-profile">View Profile</button>
+        </div>
+        <div class="availability-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Available Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2024/11/30 (2024/08/15)</td>
+                <td>20:00 - 20:48</td>
+              </tr>
+              <tr>
+                <td>2024/12/01 (2024/08/16)</td>
+                <td>20:00 - 20:48</td>
+              </tr>
+              <tr>
+                <td>2024/12/02 (2024/08/17)</td>
+                <td>20:00 - 20:48</td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="application.html" target="_blank" class="button">Take Appointment</a>
+
+        </div>
+      </div>
+      <div class="doctor-card">
+        <div class="doctor-image">
+          <img src="doctor-image.jpg" alt="Dr. Sameer Khadka">
+        </div>
+        <div class="doctor-info">
+          <h3>Rita Ansari</h3>
+          <p>specialist counselor</p>
+          <p>Experience: 5 years</p>
+          <p>Next Available Time: Nov 20 at 8:00 PM</p>
+          <button class="view-profile">View Profile</button>
+        </div>
+        <div class="availability-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th> Available Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2024/11/30 (2024/08/15)</td>
+                <td>20:00 - 20:48</td>
+              </tr>
+              <tr>
+                <td>2024/12/01 (2024/08/16)</td>
+                <td>20:00 - 20:48</td>
+              </tr>
+              <tr>
+                <td>2024/12/02 (2024/08/17)</td>
+                <td>20:00 - 20:48</td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="application.html" target="_blank" class="button">Take Appointment</a>
+        </div>
+      </div>
+      <div class="doctor-card">
+        <div class="doctor-image">
+          <img src="doctor-image.jpg" alt="Dr. Sameer Khadka">
+        </div>
+        <div class="doctor-info">
+          <h3>Sandesh Khadka</h3>
+          <p>Psychologist</p>
+          <p>Experience: 7 years</p>
+          <p>Next Available Time: Nov 20,21,29 at 8:00 PM</p>
+          <button class="view-profile">View Profile</button>
+        </div>
+        <div class="availability-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Available Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2024/11/30 (2024/08/15)</td>
+                <td>20:00 - 20:48</td>
+              </tr>
+              <tr>
+                <td>2024/12/01 (2024/08/16)</td>
+                <td>20:00 - 20:48</td>
+              </tr>
+              <tr>
+                <td>2024/12/02 (2024/08/17)</td>
+                <td>20:00 - 20:48</td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="application.html" target="_blank" class="button">Take Appointment</a>
+        </div>
+      </div>
+      <div class="doctor-card">
+        <div class="doctor-image">
+          <img src="doctor-image.jpg" alt="Dr. Sameer Khadka">
+        </div>
+        <div class="doctor-info">
+          <h3>Sarita Thapa</h3>
+          <p>counselor</p>
+          <p>Experience: 2 years</p>
+          <p>Next Available Time: Nov 30 at 8:00 PM</p>
+          <button class="view-profile">View Profile</button>
+        </div>
+        <div class="availability-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Available Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2024/11/30 (2024/08/15)</td>
+                <td>20:00 - 20:48</td>
+              </tr>
+              <tr>
+                <td>2024/12/01 (2024/08/16)</td>
+                <td>20:00 - 20:48</td>
+              </tr>
+              <tr>
+                <td>2024/12/02 (2024/08/17)</td>
+                <td>20:00 - 20:48</td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="application.html" target="_blank" class="button">Take Appointment</a>
+        </div>
+      </div>
+      </section>
+      <script>
+        // Add click event listener to the "View Profile" button
+const viewProfileButton = document.querySelector('.view-profile');
+viewProfileButton.addEventListener('click', () => {
+  // Implement logic to display the doctor's profile
+  console.log('View profile clicked');
+});
+
+// Add click event listener to the "Check Other Schedule Time" button
+const checkOtherTimeButton = document.querySelector('.check-other-time');
+checkOtherTimeButton.addEventListener('click', () => {
+  // Implement logic to display other available time slots
+  console.log('Check other schedule time clicked');
+});
+</script>
+</body>
+</html>
