@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     const services = document.querySelectorAll('.service');
     services.forEach(service => {
-      service.classList.add('animate');
+        service.classList.add('animate');
     });
+<<<<<<< HEAD
   });
    // Set your desired limit here
    const userLimit = 1000;
@@ -32,3 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
    // Event listener for the start button
    startButton.addEventListener('click', startCounting);
+=======
+});
+
+function openMagazine(url) {
+    window.open(url, '_blank');
+}
+>>>>>>> b48aaa86868d41d37f02a9ff2f0c98b3ab0ead00
