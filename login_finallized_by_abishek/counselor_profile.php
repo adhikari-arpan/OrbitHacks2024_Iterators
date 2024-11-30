@@ -35,7 +35,11 @@ if ($result->num_rows == 1) {
     <link rel="stylesheet" href="./counselor_profile.css"> <!-- Counselor-specific CSS -->
 </head>
 <body>
-<div class="counselor-container">
+    <div class="profile-counselor-container">
+     <div class="profile_button">
+        <button><a href="./../indexwithlogin.html">Home</a></button>
+     </div>
+    <div class="counselor-container">
     <header class="counselor-header">
         <h1>Hello, <?= htmlspecialchars($counselor['name']) ?></h1>
         <p>Your professional profile</p>
@@ -56,5 +60,7 @@ if ($result->num_rows == 1) {
         <button type="submit" class="logout-btn">Logout</button>
     </form>
 </div>
+    </div>
+
 </body>
 </html>

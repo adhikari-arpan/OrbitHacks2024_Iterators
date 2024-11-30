@@ -1,10 +1,49 @@
+/* General body styling */
 body {
-    font-family: Georgia, serif;
+    font-family: 'Arial', sans-serif;
     background-color: #eef2f7;
     margin: 0;
     padding: 0;
 }
 
+/* Container for the whole profile section */
+.profile-counselor-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+/* Styling the profile button (Home button) */
+.profile_button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.profile_button button {
+    background-color: #00c853;  /* Blue color for the button */
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    color: white;
+    padding: 15px 15px 15px 15px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 60px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.profile_button button:hover {
+    background-color: #009624; /* Darker blue for hover effect */
+}
+
+/* Profile container */
 .counselor-container {
     max-width: 700px;
     margin: 50px auto;
@@ -15,6 +54,7 @@ body {
     padding: 30px;
 }
 
+/* Header for the counselor profile */
 .counselor-header {
     text-align: center;
     background-color: #2c3e50;
@@ -26,8 +66,9 @@ body {
     padding: 20px;
 }
 
+/* Profile photo styling */
 .profile-photo {
-    border-radius: 10px;
+    border-radius: 50%;
     width: 200px;
     height: 200px;
     object-fit: cover;
@@ -37,16 +78,19 @@ body {
     margin: 0 auto;
 }
 
+/* List styling for the profile details */
 .profile-details {
     list-style: none;
     padding: 0;
     font-size: 1.1em;
+    line-height: 1.8em;
 }
 
 .profile-details li {
     margin: 15px 0;
 }
 
+/* Styling for the logout button */
 .logout-btn {
     display: block;
     margin: 20px auto;
@@ -57,6 +101,7 @@ body {
     border-radius: 5px;
     font-size: 1em;
     cursor: pointer;
+    text-align: center;
 }
 
 .logout-btn:hover {
