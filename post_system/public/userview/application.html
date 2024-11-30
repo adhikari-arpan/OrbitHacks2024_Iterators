@@ -34,7 +34,10 @@
             border-radius: 4px;
         }
         .form-button {
-            text-align: center;
+            display: flex;
+            justify-content: space-between;  /* Align the buttons with space between them */
+            gap: 10px;  /* Add some space between the buttons */
+            margin-top: 20px;  /* Add some space above the buttons */
         }
         .form-button button {
             background-color: #4CAF50;
@@ -44,9 +47,20 @@
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            flex: 1;  /* Make the buttons the same size */
         }
         .form-button button:hover {
             background-color: #45a049;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            text-align: center;
+            flex: 1;  /* Make the buttons the same size */
         }
         #errorMessage {
             color: red;
@@ -92,6 +106,7 @@
             <div id="successMessage"></div>
             <div class="form-button">
                 <button type="submit">Submit Appointment</button>
+                <a href="../../../index.html" class="button">Home</a>
             </div>
         </form>
     </div>
@@ -149,3 +164,4 @@
     </script>
 </body>
 </html>
+
